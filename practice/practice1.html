@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Практика — Векторы</title>
+  <link rel="stylesheet" href="../css/practice.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">Практика</div>
+    <nav>
+      <a href="../index.html">🏠 Главная</a>
+      <a href="../lessons/lessons.html">📚 Уроки</a>
+    </nav>
+  </header>
+
+  <main class="practice-container">
+    <aside class="sidebar">
+      <h3>Задачи</h3>
+      <ul>
+        <li><a href="#task1">Задача 1</a></li>
+        <li><a href="#task2">Задача 2</a></li>
+        <li><a href="#task3">Задача 3</a></li>
+        <li><a href="#task4">Задача 4</a></li>
+        <li><a href="#task5">Задача 5</a></li>
+        <li><a href="#task6">Задача 6</a></li>
+      </ul>
+    </aside>
+
+    <section class="task-block">
+      <h2 id="task1">Задача 1</h2>
+      <p>Найди координаты вектора <strong>AB</strong>, если A = (1, 2), B = (4, 6)</p>
+      <div id="vector-task1" class="vector-canvas"></div>
+      <button class="show-answer" onclick="this.nextElementSibling.style.display = 'block'; this.style.backgroundColor = '#2ecc71'; this.textContent = 'Ответ показан';">Показать ответ</button>
+      <div class="answer">Ответ: AB = (4 - 1, 6 - 2) = <strong>(3, 4)</strong></div>
+    </section>
+
+    <div class="task-block" id="task2">
+        <h2>Задача 2</h2>
+        <p>Пусть вектор <strong>a = (2, -3)</strong>, а вектор <strong>b = (-1, -4)</strong>. Что получится, если сложить векторы a и b? <strong>a + b</strong>.</p>
+        <div id="vector-task2" class="vector-canvas"></div>
+        <button class="show-answer" onclick="this.nextElementSibling.style.display = 'block'; this.style.backgroundColor = '#2ecc71'; this.textContent = 'Ответ показан';">Показать ответ</button>
+        <div class="answer">Ответ: <strong>a + b = (2 + (-1), -3 + (-4)) = (1, -7)</strong></div>
+    </div>
+
+    <div class="task-block" id="task3">
+        <h2>Задача 3</h2>
+        <p>Дан вектор <strong>a = (2, 1)</strong>. Найди координаты вектора <strong>b = 3a</strong>.</p>
+        <div id="vector-task3" class="vector-canvas"></div>
+        <button class="show-answer" onclick="this.nextElementSibling.style.display = 'block'; this.style.backgroundColor = '#2ecc71'; this.textContent = 'Ответ показан';">Показать ответ</button>
+        <div class="answer">Ответ: b = (2×3, 1×3) = <strong>(6, 3)</strong></div>
+    </div>
+
+    <div class="task-block" id="task4">
+        <h2>Задача 4</h2>
+        <p>Вектор <strong>A = (4, 3)</strong>. Найди проекцию этого вектора на ось <strong>OX</strong>.</p>
+        <div id="vector-task4" class="vector-canvas"></div>
+        <button class="show-answer" onclick="this.nextElementSibling.style.display = 'block'; this.style.backgroundColor = '#2ecc71'; this.textContent = 'Ответ показан';">Показать ответ</button>
+        <div class="answer">Ответ: проекция a на ось OX = <strong>4</strong></div>
+    </div>
+
+    <div class="task-block" id="task5">
+        <h2>Задача 5</h2>
+        <p>Найди скалярное произведение векторов <strong>A</strong> и <strong>B</strong>, если A = (3, 2), B = (1, 4).</p>
+        <div id="vector-task5" class="vector-canvas"></div>
+        <button class="show-answer" onclick="this.nextElementSibling.style.display = 'block'; this.style.backgroundColor = '#2ecc71'; this.textContent = 'Ответ показан';">Показать ответ</button>
+        <div class="answer">Ответ: A · B = 3·1 + 2·4 = <strong>11</strong></div>
+    </div>
+
+    <div class="task-block" id="task6">
+        <h2>Задача 6</h2>
+        <p>Найди угол между векторами <strong>A = (2, 3)</strong> и <strong>B = (4, 1)</strong> (в градусах). Ответ округли до целого.</p>
+        <div id="vector-task6" class="vector-canvas"></div>
+        <button class="show-answer" onclick="this.nextElementSibling.style.display = 'block'; this.style.backgroundColor = '#2ecc71'; this.textContent = 'Ответ показан';">Показать ответ</button>
+        <div class="answer">
+            Ответ:  
+            A · B = 2×4 + 3×1 = 8 + 3 = 11  
+            |A| = √(2² + 3²) = √13  
+            |B| = √(4² + 1²) = √17  
+            cos(θ) = 11 / (√13·√17) ≈ 0.738  
+            θ ≈ <strong>43°</strong>
+        </div>
+    </div>
+
+
+
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <script>
+    function setupVectorCanvas(id, drawFunc) {
+      new p5(p => {
+        p.setup = () => {
+          const canvas = p.createCanvas(300, 250);
+          canvas.parent(id);
+        };
+        p.draw = () => {
+          p.background(255);
+          p.translate(40, 210);
+
+          // Grid
+          p.stroke(220);
+          for (let x = 0; x < 300; x += 20) p.line(x, 0, x, -200);
+          for (let y = 0; y < 220; y += 20) p.line(0, -y, 300, -y);
+
+          // Axes
+          p.stroke(0);
+          p.line(0, 0, 240, 0);
+          p.line(0, 0, 0, -180);
+          p.fill(0);
+          p.text("x", 245, 0);
+          p.text("y", 0, -185);
+          p.line(240, 0, 235, -5);
+          p.line(240, 0, 235, 5);
+          p.line(0, -180, -5, -175);
+          p.line(0, -180, 5, -175);
+
+          drawFunc(p);
+        };
+      });
+    }
+
+    setupVectorCanvas("vector-task1", p => {
+      let A = p.createVector(20, -40);
+      let B = p.createVector(80, -100);
+      p.stroke("blue");
+      p.strokeWeight(2);
+      p.line(A.x, A.y, B.x, B.y);
+      p.fill(0);
+      p.ellipse(A.x, A.y, 2, 2);
+      p.ellipse(B.x, B.y, 2, 2);
+      p.text("A", A.x - 10, A.y + 15);
+      p.text("B", B.x + 5, B.y + 5);
+      p.push();
+      p.translate(B.x, B.y);
+      let dir = p5.Vector.sub(B, A);
+      p.rotate(dir.heading());
+      p.line(0, 0, -10, -5);
+      p.line(0, 0, -10, 5);
+      p.pop();
+    });
+
+    setupVectorCanvas("vector-task2", p => {
+        let scale = 20;
+        let a = p.createVector(2 * scale, -3 * scale);
+        let b = p.createVector(-1 * scale, -4 * scale);
+        let origin = p.createVector(0, 0);
+        let endB = p5.Vector.add(a, b);
+
+        // Вектор a
+        p.stroke("blue");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, a.x, a.y);
+        p.fill(0);
+        p.text("a", a.x + 5, a.y - 5);
+        // стрелка для a
+        p.push();
+        p.translate(a.x, a.y);
+        let dirA = p5.Vector.sub(a, origin);
+        p.rotate(dirA.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+
+        // Вектор b (из конца a)
+        p.stroke("green");
+        p.line(a.x, a.y, endB.x, endB.y);
+        p.fill(0);
+        p.text("b", (a.x + endB.x) / 2 + 5, (a.y + endB.y) / 2 - 5);
+        // стрелка для b
+        p.push();
+        p.translate(endB.x, endB.y);
+        let dirB = p5.Vector.sub(endB, a);
+        p.rotate(dirB.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+
+        // Вектор суммы a + b
+        p.stroke("red");
+        p.line(origin.x, origin.y, endB.x, endB.y);
+        p.text("a + b", endB.x + 5, endB.y - 5);
+        // стрелка для суммы
+        p.push();
+        p.translate(endB.x, endB.y);
+        let dirSum = p5.Vector.sub(endB, origin);
+        p.rotate(dirSum.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+
+        // Точки
+        p.fill(0);
+        p.ellipse(origin.x, origin.y, 6, 6);
+        p.ellipse(a.x, a.y, 6, 6);
+        p.ellipse(endB.x, endB.y, 6, 6);
+    });
+
+    setupVectorCanvas("vector-task3", p => {
+        let origin = p.createVector(0, 0);
+        let a = p.createVector(2 * 20, -1 * 20);
+        let b = p.createVector(6 * 20, -3 * 20);
+
+        // Вектор a
+        p.stroke("blue");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, a.x, a.y);
+        p.fill(0);
+        p.ellipse(a.x, a.y, 6, 6);
+        p.text("a", a.x + 5, a.y - 5);
+        p.push();
+        p.translate(a.x, a.y);
+        let dirA = p5.Vector.sub(a, origin);
+        p.rotate(dirA.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+
+        // Вектор b
+        p.stroke("green");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, b.x, b.y);
+        p.fill(0);
+        p.ellipse(b.x, b.y, 4, 4);
+        p.text("b", b.x + 5, b.y - 5);
+        p.push();
+        p.translate(b.x, b.y);
+        let dirB = p5.Vector.sub(b, origin);
+        p.rotate(dirB.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+    });
+
+    setupVectorCanvas("vector-task4", p => {
+        const origin = p.createVector(0, 0);
+        const A = p.createVector(60, -80); // (3,4)
+
+        // Вектор A
+        p.stroke("blue");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, A.x, A.y);
+
+        // Точка A
+        p.fill(0);
+        p.ellipse(A.x, A.y, 6, 6);
+        p.text("A", A.x + 5, A.y - 5);
+
+        // Проекция на ось X
+        p.stroke("orange");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, A.x, 0);
+        p.ellipse(A.x, 0, 6, 6);
+        p.text("Ax", A.x + 5, 15);
+
+        // Стрелка к A
+        p.push();
+        p.translate(A.x, A.y);
+        let dirA = p5.Vector.sub(A, origin);
+        p.rotate(dirA.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+
+        // Стрелка к проекции
+        p.push();
+        p.translate(A.x, 0);
+        let dirP = p5.Vector.sub(p.createVector(A.x, 0), origin);
+        p.rotate(dirP.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+    });
+
+    setupVectorCanvas("vector-task5", p => {
+        const origin = p.createVector(0, 0);
+        const A = p.createVector(60, -40); // (3,2)
+        const B = p.createVector(20, -80); // (1,4)
+
+        // Вектор A
+        p.stroke("blue");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, A.x, A.y);
+        p.fill(0);
+        p.ellipse(A.x, A.y, 6, 6);
+        p.text("A", A.x + 5, A.y - 5);
+
+        // Стрелка A
+        p.push();
+        p.translate(A.x, A.y);
+        let dirA = p5.Vector.sub(A, origin);
+        p.rotate(dirA.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+
+        // Вектор B
+        p.stroke("green");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, B.x, B.y);
+        p.fill(0);
+        p.ellipse(B.x, B.y, 6, 6);
+        p.text("B", B.x + 5, B.y - 5);
+
+        // Стрелка B
+        p.push();
+        p.translate(B.x, B.y);
+        let dirB = p5.Vector.sub(B, origin);
+        p.rotate(dirB.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+    });
+
+    setupVectorCanvas("vector-task6", p => {
+        const origin = p.createVector(0, 0);
+        const A = p.createVector(40, -60); // (2,3)
+        const B = p.createVector(80, -20); // (4,1)
+
+        // Вектор A
+        p.stroke("blue");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, A.x, A.y);
+        p.fill(0);
+        p.ellipse(A.x, A.y, 6, 6);
+        p.text("A", A.x + 5, A.y - 5);
+
+        p.push();
+        p.translate(A.x, A.y);
+        const dirA = p5.Vector.sub(A, origin);
+        p.rotate(dirA.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+
+        // Вектор B
+        p.stroke("green");
+        p.strokeWeight(2);
+        p.line(origin.x, origin.y, B.x, B.y);
+        p.fill(0);
+        p.ellipse(B.x, B.y, 6, 6);
+        p.text("B", B.x + 5, B.y - 5);
+
+        p.push();
+        p.translate(B.x, B.y);
+        const dirB = p5.Vector.sub(B, origin);
+        p.rotate(dirB.heading());
+        p.line(0, 0, -10, -5);
+        p.line(0, 0, -10, 5);
+        p.pop();
+    });
+
+  </script>
+</body>
+</html>

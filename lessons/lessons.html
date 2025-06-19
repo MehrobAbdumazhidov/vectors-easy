@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Уроки — Векторы это просто</title>
+  <link rel="stylesheet" href="../css/lessons.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+</head>
+<body>
+  <header class="top-bar">
+    <button onclick="goHome()" class="home-btn">🏠 Главная</button>
+    <h1>📚 Теория: Изучаем векторы !</h1>
+  </header>
+
+  <div class="lessons-wrapper">
+    <!-- Оглавление -->
+    <aside class="toc">
+      <h2>Оглавление</h2>
+      <ul>
+        <li><a href="#lesson1">Урок 1: Что такое вектор?</a></li>
+        <li><a href="#lesson2">Урок 2: Координаты вектора</a></li>
+        <li><a href="#lesson3">Урок 3: Сложение векторов</a></li>
+        <li><a href="#lesson4">Урок 4: Умножение вектора на число</a></li>
+        <li><a href="#lesson5">Урок 5: Проекция вектора на прямую</a></li>
+        <li><a href="#lesson5">Урок 6: Скалярное произведение</a></li>
+      </ul>
+    </aside>
+
+    <!-- Содержание уроков -->
+    <main class="lessons-content">
+
+      <!-- Урок 1 -->
+      <section class="lesson" id="lesson1">
+        <h2>Урок 1: Что такое вектор?</h2>
+        <p>
+          Вектор — это <strong>направленный отрезок</strong>, то есть линия, у которой есть направление и длина. У вектора есть:
+        </p>
+        <ul>
+          <li><strong>Начало (точка A)</strong></li>
+          <li><strong>Конец (точка B)</strong></li>
+          <li><strong>Длина</strong> — расстояние между точками A и B</li>
+          <li><strong>Направление</strong> — от A к B</li>
+        </ul>
+
+        <h3>Обозначение</h3>
+        <p>
+          Вектор можно обозначать как <strong>→AB</strong> (вектор от точки A до точки B), или в виде координат — например, <strong>(3, 2)</strong>.
+        </p>
+
+        <h3>Сравнение с отрезком</h3>
+        <p>
+          В отличие от обычного отрезка, вектор <strong>имеет направление</strong>. Вектор →AB ≠ →BA!
+        </p>
+
+        <div class="canvas-container" id="vector-demo1"></div>
+
+        <h3>Формула длины вектора</h3>
+        <p>Если вектор задан координатами (x, y), его длина вычисляется по формуле:</p>
+        <p style="font-size: 1.2rem; font-family: serif;">
+          <strong>|𝐯| = √(x² + y²)</strong>
+        </p>
+
+        <h3>Пример</h3>
+        <p>Вектор с координатами (3, 4):</p>
+        <ul>
+          <li>Длина: √(3² + 4²) = √25 = 5</li>
+          <li>Направление: вправо и вверх</li>
+        </ul>
+      </section>
+
+      <!-- Урок 2 -->
+      <section class="lesson" id="lesson2">
+        <h2>Урок 2: Координаты вектора</h2>
+        <p>
+          Если известны две точки <strong>A(x₁, y₁)</strong> и <strong>B(x₂, y₂)</strong>, то координаты вектора
+          <strong>→AB</strong> вычисляются как:
+        </p>
+        <p style="font-size: 1.2rem; font-family: serif;">
+          <strong>→AB = (x₂ - x₁, y₂ - y₁)</strong>
+        </p>
+
+        <h3>Пример</h3>
+        <p>
+          Пусть A(1, 2), B(5, 7). Тогда:
+          <br />
+          →AB = (5 - 1, 7 - 2) = <strong>(4, 5)</strong>
+        </p>
+
+        <div class="canvas-container" id="vector-demo2"></div>
+
+        <h3>Как это выглядит?</h3>
+        <p>
+          Визуально координаты показывают, насколько вектор «перемещает» точку: вправо на 4, вверх на 5.
+        </p>
+
+      <div class="task-box">
+        <p><strong>Задача:</strong> Найди координаты вектора →CD, если C(3, 1), D(7, 4).</p>
+        <button class="show-answer-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+        <div class="answer-box" style="display: none;">
+            →CD = (7 - 3, 4 - 1) = <strong>(4, 3)</strong>
+        </div>
+       </div>
+
+
+
+      </section>
+
+      <!-- Урок 3 -->
+      <section class="lesson" id="lesson3">
+        <h2>Урок 3: Сложение векторов</h2>
+        <p>
+            Чтобы сложить два вектора <strong>A</strong> и <strong>B</strong>, складываем их координаты:
+        </p>
+        <p style="font-size: 1.2rem; font-family: serif;">
+            <strong>A + B = (x₁ + x₂, y₁ + y₂)</strong>
+        </p>
+
+        <h3>Пример</h3>
+        <p>
+            Пусть A = (2, -1), B = (1, -3). Тогда:<br />
+            A + B = (2 + 1, -1 + (-3)) = <strong>(3, -4)</strong>
+        </p>
+
+        <div class="canvas-container" id="vector-demo3"></div>
+
+        <h3>Что происходит при сложении?</h3>
+        <p>
+            Вектор B как бы «прикрепляется» к концу вектора A. Визуально — это «шаг за шагом»: сначала идём по A, затем по B.
+            В результате получается вектор, ведущий от начала A до конца B.
+        </p>
+
+       <div class="task-box">
+        <p><strong>Задача:</strong> Сложи векторы A = (2, 1) и B = (3, 2).</p>
+        <button class="show-answer-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+        <div class="answer-box" style="display: none;">
+            A + B = (2 + 3, 1 + 2) = <strong>(5, 3)</strong>
+        </div>
+       </div>
+
+
+      </section>
+
+      <!-- Урок 4 -->
+      <section class="lesson" id="lesson4">
+        <h2>Урок 4: Умножение вектора на число</h2>
+
+        <p>
+            Умножение вектора на число изменяет его длину, но сохраняет направление (если число положительное) или меняет его на противоположное (если число отрицательное).
+        </p>
+
+        <h3>Формула</h3>
+        <p style="font-size: 1.2rem; font-family: serif;">
+            <strong>k·𝐯 = (k·x, k·y)</strong>
+        </p>
+
+        <h3>Пример</h3>
+        <p>
+            Пусть 𝐯 = (2, 3) и k = 2:
+            <br />
+            2·𝐯 = (4, 6) — вектор стал в 2 раза длиннее.
+            <br />
+            А если k = -1:
+            <br />
+            –𝐯 = (–2, –3) — направление противоположное.
+        </p>
+
+        <div class="canvas-container" id="vector-demo4"></div>
+
+        <h3>Задача</h3>
+        <p>
+            Умножь вектор <strong>(1, 2)</strong> на <strong>–3</strong>.
+        </p>
+
+       <div class="task-box">
+        <p><strong>Задача:</strong> Умножь вектор <strong>(1, 2)</strong> на <strong>−3</strong>.</p>
+        <button class="show-answer-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+        <div class="answer-box" style="display: none;">
+            (1, 2) × (−3) = <strong>(−3, −6)</strong>
+        </div>
+       </div>
+
+
+      </section>
+
+      <!-- Урок 5 -->
+      <section class="lesson" id="lesson5">
+        <h2>Урок 5: Проекция вектора на прямую</h2>
+        <p>
+            Проекция вектора <strong>𝐯</strong> на прямую — это длина тени, которую вектор отбрасывает на эту прямую.
+            Это важно при вычислении компонент, углов и скалярного произведения.
+        </p>
+
+        <h3>Формула</h3>
+        <p style="font-family: serif; font-size: 1.2rem;">
+            <strong>proj<sub>𝐮</sub>𝐯 = (𝐯 · 𝐮) · 𝐮</strong>
+        </p>
+        <p>
+            Где 𝐮 — единичный вектор вдоль прямой, а 𝐯 · 𝐮 — скалярное произведение.
+        </p>
+
+        <div class="canvas-container" id="vector-demo5"></div>
+
+        <h3>Пример</h3>
+        <p>
+            Вектор 𝐯 = (4, 3), прямая — ось X,  𝐮 = (1, 0).
+        </p>
+        <ul>
+            <li>Скалярное произведение: 4×1 + 3×0 = 4</li>
+            <li>Проекция: 4 · (1, 0) = (4, 0)</li>
+        </ul>
+
+        <div class="task-box">
+        <p><strong>Задача:</strong> Являются ли коллинеарными векторы A = (2, 3) и B = (4, 6)?</p>
+        <button class="show-answer-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+        <div class="answer-box" style="display: none;">
+            Да, вектор B = 2 × A, поэтому они <strong>коллинеарны</strong>.
+        </div>
+        </div>
+      </section>
+
+      <!-- Урок 6 -->
+      <section class="lesson">
+        <h2>Урок 6: Скалярное произведение векторов</h2>
+
+        <p><strong>Скалярное произведение</strong> — это число, получаемое по формуле:<br>
+        <code>a · b = aₓ·bₓ + aᵧ·bᵧ</code></p>
+
+        <p>Пример: если <code>a = (3, 2)</code>, <code>b = (1, 4)</code>, то:<br>
+        <code>a · b = 3·1 + 2·4 = 3 + 8 = 11</code></p>
+
+        <div class="vector-section">
+            <h3>Визуализация</h3>
+            <div id="vector-demo6"></div>
+        </div>
+
+       <div class="task-box">
+            <p><strong>Задача:</strong> Найди скалярное произведение векторов A = (1, 2) и B = (3, 4)?</p>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+            <div class="answer-box" style="display: none;">
+              A · B = 1·3 + 2·4 = 3 + 8 = <strong>11</strong>
+            </div>
+        </div>
+      </section>
+
+
+
+    </main>
+  </div>
+
+  <!-- Скрипты визуализации -->
+  <script>
+    function sketch1(p) {
+      p.setup = function () {
+        let cnv = p.createCanvas(350, 200);
+        cnv.parent("vector-demo1");
+      };
+
+      p.draw = function () {
+        p.background(255);
+        let origin = p.createVector(50, 150);
+        let end = p.createVector(150, 70);
+
+        p.stroke(52, 152, 219);
+        p.strokeWeight(3);
+        p.line(origin.x, origin.y, end.x, end.y);
+
+        p.push();
+        p.translate(end.x, end.y);
+        let dir = p5.Vector.sub(end, origin);
+        p.rotate(dir.heading());
+        p.line(0, 0, -10, -6);
+        p.line(0, 0, -10, 6);
+        p.pop();
+
+        p.fill(0);
+        p.noStroke();
+        p.ellipse(origin.x, origin.y, 6, 6);
+        p.ellipse(end.x, end.y, 6, 6);
+        p.text("A (0, 0)", origin.x - 20, origin.y + 15);
+        p.text("B (3, 4)", end.x + 5, end.y);
+      };
+    }
+
+    function sketch2(p) {
+      p.setup = function () {
+        let cnv = p.createCanvas(350, 200);
+        cnv.parent("vector-demo2");
+      };
+
+      p.draw = function () {
+        p.background(255);
+        let A = p.createVector(50, 150);
+        let B = p.createVector(170, 70);
+
+        p.stroke(46, 204, 113);
+        p.strokeWeight(3);
+        p.line(A.x, A.y, B.x, B.y);
+
+        p.push();
+        p.translate(B.x, B.y);
+        let dir = p5.Vector.sub(B, A);
+        p.rotate(dir.heading());
+        p.line(0, 0, -10, -6);
+        p.line(0, 0, -10, 6);
+        p.pop();
+
+        p.fill(0);
+        p.noStroke();
+        p.ellipse(A.x, A.y, 6, 6);
+        p.ellipse(B.x, B.y, 6, 6);
+        p.text("A(1, 2)", A.x - 20, A.y + 15);
+        p.text("B(5, 7)", B.x + 5, B.y);
+      };
+    }
+
+
+    function sketch3(p) {
+      p.setup = function () {
+        let cnv = p.createCanvas(400, 250);
+        cnv.parent("vector-demo3");
+    };
+
+    p.draw = function () {
+        p.background(255);
+        let scale = 40;
+
+        // Векторы
+        let origin = p.createVector(80, 200);
+        let a = p.createVector(2, -1);
+        let b = p.createVector(1, -3);
+
+        let a_end = p5.Vector.add(origin, p5.Vector.mult(a, scale));
+        let b_start = a_end.copy();
+        let b_end = p5.Vector.add(b_start, p5.Vector.mult(b, scale));
+        let ab_end = p5.Vector.add(origin, p5.Vector.mult(p5.Vector.add(a, b), scale));
+
+        // Функция стрелки
+        function drawArrow(base, vecEnd, color, label) {
+        p.stroke(color);
+        p.strokeWeight(3);
+        p.line(base.x, base.y, vecEnd.x, vecEnd.y);
+
+        // Стрелка
+        p.push();
+        let dir = p5.Vector.sub(vecEnd, base);
+        p.translate(vecEnd.x, vecEnd.y);
+        p.rotate(dir.heading());
+        p.line(0, 0, -10, -6);
+        p.line(0, 0, -10, 6);
+        p.pop();
+
+        // Текст
+        p.fill(0);
+        p.noStroke();
+        if (label) {
+            p.text(label, (base.x + vecEnd.x) / 2 + 5, (base.y + vecEnd.y) / 2);
+        }
+      }
+
+      // Рисуем A (красный)
+      drawArrow(origin, a_end, 'red', 'A');
+
+      // Рисуем B (синяя), начиная от конца A
+      drawArrow(b_start, b_end, 'blue', 'B');
+
+      // Рисуем A + B (зелёная) — от начала до конца B
+      drawArrow(origin, ab_end, 'green', 'A + B');
+      };
+    }
+
+
+    function sketch4(p) {
+      p.setup = function () {
+        let cnv = p.createCanvas(400, 250);
+        cnv.parent("vector-demo4");
+      };
+
+      p.draw = function () {
+        p.background(255);
+        p.translate(50, 200);
+
+        // Оси
+        p.stroke(200);
+        p.line(0, 0, 300, 0); // x
+        p.line(0, 0, 0, -200); // y
+
+        let base = p.createVector(40, -60);
+        let scaled = p.createVector(base.x * 2, base.y * 2);
+
+        // Исходный вектор (синий)
+        p.stroke(52, 152, 219);
+        p.strokeWeight(3);
+        p.line(0, 0, base.x, base.y);
+        p.push();
+        p.translate(base.x, base.y);
+        p.rotate(base.heading());
+        p.line(0, 0, -10, -6);
+        p.line(0, 0, -10, 6);
+        p.pop();
+        p.noStroke();
+        p.fill(0);
+        p.text("v = (2, 3)", base.x + 5, base.y + 5);
+
+        // Умноженный вектор (зелёный)
+        p.stroke(46, 204, 113);
+        p.strokeWeight(3);
+        p.line(0, 0, scaled.x, scaled.y);
+        p.push();
+        p.translate(scaled.x, scaled.y);
+        p.rotate(scaled.heading());
+        p.line(0, 0, -10, -6);
+        p.line(0, 0, -10, 6);
+        p.pop();
+        p.noStroke();
+        p.fill(0);
+        p.text("2·v = (4, 6)", scaled.x + 5, scaled.y + 5);
+      };
+    }
+
+
+    function sketch5(p) {
+     p.setup = function () {
+      let cnv = p.createCanvas(400, 250);
+      cnv.parent("vector-demo5");
+     };
+
+     p.draw = function () {
+      p.background(255);
+      p.translate(50, 200);
+
+      // Оси
+      p.stroke(200);
+      p.line(0, 0, 300, 0); // ось X
+      p.line(0, 0, 0, -200); // ось Y
+      p.noStroke();
+      p.fill(100);
+      p.text("x", 300, 15);
+      p.text("y", -15, -190);
+
+      // Вектор A
+      let A = p.createVector(60, -100);
+      p.stroke(52, 152, 219);
+      p.strokeWeight(3);
+      p.line(0, 0, A.x, A.y);
+      p.push();
+      p.translate(A.x, A.y);
+      p.rotate(A.heading());
+      p.line(0, 0, -10, -6);
+      p.line(0, 0, -10, 6);
+      p.pop();
+      p.noStroke();
+      p.fill(0);
+      p.text("A = (3, 5)", A.x + 5, A.y + 5);
+
+      // Прямая (ось проекции — вектор B)
+      let B = p.createVector(100, -40);
+      p.stroke(230, 126, 34);
+      p.strokeWeight(1);
+      p.line(0, 0, B.x * 2, B.y * 2);
+      p.line(0, 0, -B.x * 1.5, -B.y * 1.5);
+      p.noStroke();
+      p.fill(0);
+      p.text(B.x + 10, B.y + 5);
+
+      // Проекция вектора A на направление B
+      let unitB = B.copy().normalize();
+      let projLength = A.dot(unitB);
+      let proj = unitB.mult(projLength);
+
+      p.stroke(39, 174, 96);
+      p.strokeWeight(3);
+      p.line(0, 0, proj.x, proj.y);
+      p.push();
+      p.translate(proj.x, proj.y);
+      p.rotate(proj.heading());
+      p.line(0, 0, -10, -6);
+      p.line(0, 0, -10, 6);
+      p.pop();
+      p.noStroke();
+      p.fill(0);
+      p.text("proj_A(B)", proj.x + 5, proj.y + 5);
+     };
+    }
+
+    function sketch6(p) {
+      p.setup = function () {
+        let cnv = p.createCanvas(400, 250);
+        cnv.parent("vector-demo6");
+      };
+
+      p.draw = function () {
+        p.background(255);
+        p.translate(50, 200);
+
+        // Оси
+        p.stroke(200);
+        p.line(0, 0, 300, 0); // x
+        p.line(0, 0, 0, -200); // y
+
+        let a = p.createVector(60, -40); // (3, 2)
+        let b = p.createVector(20, -80); // (1, 4)
+
+        // Вектор a (синий)
+        p.stroke(52, 152, 219);
+        p.strokeWeight(3);
+        p.line(0, 0, a.x, a.y);
+        p.push();
+        p.translate(a.x, a.y);
+        p.rotate(a.heading());
+        p.line(0, 0, -10, -6);
+        p.line(0, 0, -10, 6);
+        p.pop();
+        p.noStroke();
+        p.fill(0);
+        p.text("a = (3, 2)", a.x + 5, a.y + 5);
+
+        // Вектор b (зелёный)
+        p.stroke(46, 204, 113);
+        p.strokeWeight(3);
+        p.line(0, 0, b.x, b.y);
+        p.push();
+        p.translate(b.x, b.y);
+        p.rotate(b.heading());
+        p.line(0, 0, -10, -6);
+        p.line(0, 0, -10, 6);
+        p.pop();
+        p.noStroke();
+        p.fill(0);
+        p.text("b = (1, 4)", b.x + 5, b.y + 5);
+      };
+    }
+
+    new p5(sketch6);
+    new p5(sketch5);
+    new p5(sketch4);
+    new p5(sketch3);
+    new p5(sketch1);
+    new p5(sketch2);
+  </script>
+
+<script>
+function toggleAnswer(button) {
+  const answer = button.nextElementSibling;
+  answer.style.display = answer.style.display === "block" ? "none" : "block";
+  button.classList.toggle("clicked");
+}
+function goHome() {
+  window.location.href = "../index.html";
+}
+</script>
+
+
+</body>
+</html>

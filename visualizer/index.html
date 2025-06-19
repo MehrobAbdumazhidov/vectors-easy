@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Визуализатор Векторов</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            background: #1e1e2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Верхняя навигационная панель */
+        .top-nav {
+            background: #252526;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #3c3c3c;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-right: 30px;
+        }
+        
+        .nav-items {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: transparent;
+            color: #e0e0e0;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1rem;
+        }
+        
+        .nav-btn:hover {
+            background: #3c3c3c;
+        }
+        
+        .nav-btn.active {
+            background: #0e639c;
+            color: white;
+        }
+        
+        /* Основной контейнер */
+        .container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - 60px);
+        }
+        
+        /* Область визуализации */
+        .visualization {
+            flex: 1;
+            position: relative;
+            background: #121212;
+        }
+        
+        #vectorCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        /* Панель управления */
+        .control-panel {
+            width: 320px;
+            background: #252526;
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 1px solid #3c3c3c;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        }
+        
+        .panel-section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #3c3c3c;
+        }
+        
+        h2 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h3 {
+            color: #9cdcfe;
+            margin: 15px 0 10px;
+            font-size: 1.1em;
+        }
+        
+        .vector-input {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .vector-input label {
+            width: 50px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .vector-input input {
+            flex: 1;
+            padding: 8px 10px;
+            background: #3c3c3c;
+            border: 1px solid #2d2d2d;
+            color: #e0e0e0;
+            border-radius: 4px;
+        }
+        
+        .operations {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        button {
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #1177bb;
+        }
+        
+        .result {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        .vector-info {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .color-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        header .logo,
+        header nav a {
+            display: none;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+        }
+
+
+        #vectorAIndicator { background: #ff5555; }
+        #vectorBIndicator { background: #5555ff; }
+        #resultIndicator { background: #55ff55; }
+        
+        .info-text {
+            margin-top: 5px;
+            font-style: italic;
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+        .top-nav {
+            justify-content: space-between; /* Распределяет пространство между элементами */
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 15px;
+        }
+
+        .reset-buttons {
+            display: flex;
+            gap: 15px;
+            margin-left: auto; /* Перемещает блок вправо */
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя навигационная панель -->
+
+  <div class="top-nav">
+    <div class="nav-logo">Векторы 3D</div>
+    <div class="nav-items">
+        <a class="nav-btn" href="../index.html">🏠 Главная</a>
+        <a class="nav-btn" href="../lessons/lessons.html">📚 Уроки</a>
+        <a class="nav-btn" href="../practice/practice1.html">🧪 Практика</a>
+        <a class="nav-btn" href="../tests/tests.html">🧠 Тесты</a>
+    </div>
+    <div class="reset-buttons">
+        <button class="nav-btn" id="resetCameraBtn">🎯 Сброс камеры</button>
+        <button class="nav-btn" id="resetSceneBtn">🔄 Сброс сцены</button>
+    </div>
+  </div>
+
+    
+    <!-- Основной контент -->
+    <div class="container">
+        <!-- Область 3D визуализации -->
+        <div class="visualization">
+            <canvas id="vectorCanvas"></canvas>
+        </div>
+        
+        <!-- Панель управления -->
+        <div class="control-panel">
+            <div class="panel-section">
+                <h2>3D Визуализатор Векторов</h2>
+                <p>Интерактивное отображение векторных операций в трехмерном пространстве</p>
+            </div>
+            
+            <div class="panel-section">
+                <h3>Вектор A</h3>
+                <div class="vector-input">
+                    <label>X:</label>
+                    <input type="number" id="aX" value="2" min="-100" max="100" step="0.01">
+                </div>
+                <div class="vector-input">
+                    <label>Y:</label>
+                    <input type="number" id="aY" value="3" min="-100" max="100" step="0.01">
+
+                </div>
+                <div class="vector-input">
+                    <label>Z:</label>
+                    <input type="number" id="aZ" value="1" min="-100" max="100" step="0.01">
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h3>Вектор B</h3>
+                <div class="vector-input">
+                    <label>X:</label>
+                    <input type="number" id="bX" value="-1">
+                </div>
+                <div class="vector-input">
+                    <label>Y:</label>
+                    <input type="number" id="bY" value="2">
+                </div>
+                <div class="vector-input">
+                    <label>Z:</label>
+                    <input type="number" id="bZ" value="4">
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h3>Векторные операции</h3>
+                <div class="operations">
+                    <button id="addBtn">A + B</button>
+                    <button id="subtractBtn">A - B</button>
+                    <button id="crossBtn">A × B (Векторное)</button>
+                    <button id="dotBtn">A · B (Скалярное)</button>
+                    <button id="projectionBtn">Проекция A на B</button>
+                    <button id="angleBtn">Угол между A и B</button>
+                    <button id="magnitudeBtn">Длина A</button>
+                    <button id="normalizeBtn">Нормализация A</button>
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h3>Результат</h3>
+                <div class="vector-info">
+                    <div class="color-indicator" id="vectorAIndicator"></div>
+                    <span>Вектор A</span>
+                </div>
+                <div class="vector-info">
+                    <div class="color-indicator" id="vectorBIndicator"></div>
+                    <span>Вектор B</span>
+                </div>
+                <div class="vector-info">
+                    <div class="color-indicator" id="resultIndicator"></div>
+                    <span>Результат</span>
+                </div>
+                
+                <div class="result" id="resultOutput">Результаты операций будут отображаться здесь</div>
+                
+                <div class="info-text">
+                    Используйте мышь для вращения сцены. Колёсико мыши - для масштабирования.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Основные переменные
+        let scene, camera, renderer, controls;
+        let vectorA, vectorB, resultVector;
+        let vectorAArrow, vectorBArrow, resultArrow;
+        let axesHelper, gridHelper;
+        
+        // Инициализация сцены
+        function init() {
+            // Создание сцены
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x121212);
+            
+            // Создание камеры
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(30, 30, 30); 
+            camera.lookAt(0, 0, 0);
+            
+            // Создание рендерера
+            const canvas = document.getElementById('vectorCanvas');
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // Добавление управления камерой
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            controls.target.set(0, 0, 0);
+            controls.update();
+
+            
+            // Освещение
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Создание координатных осей
+            axesHelper = new THREE.AxesHelper(120);
+            scene.add(axesHelper);
+            
+            // Создание координатной сетки
+            gridHelper = new THREE.GridHelper(200, 20, 0x444444, 0x222222);
+            scene.add(gridHelper);
+
+            
+            // Инициализация векторов
+            vectorA = new THREE.Vector3(2, 3, 1);
+            vectorB = new THREE.Vector3(-1, 2, 4);
+            resultVector = new THREE.Vector3();
+            
+            // Отрисовка векторов
+            drawVectors();
+            
+            // Обработчики событий
+            setupEventListeners();
+            
+            // Запуск анимации
+            animate();
+            
+            // Обработка изменения размера окна
+            window.addEventListener('resize', onWindowResize);
+        }
+        
+        // Функция отрисовки векторов
+        function drawVectors() {
+            // Удаление старых векторов
+            if (vectorAArrow) scene.remove(vectorAArrow);
+            if (vectorBArrow) scene.remove(vectorBArrow);
+            if (resultArrow) scene.remove(resultArrow);
+            
+            // Создание стрелок для векторов
+            vectorAArrow = createArrow(vectorA, 0xff5555, 'A');
+            vectorBArrow = createArrow(vectorB, 0x5555ff, 'B');
+            resultArrow = createArrow(resultVector, 0x55ff55, 'Результат');
+            
+            // Добавление на сцену
+            scene.add(vectorAArrow);
+            scene.add(vectorBArrow);
+            scene.add(resultArrow);
+        }
+        
+        // Создание 3D стрелки для вектора
+        function createArrow(vector, color, name) {
+            const origin = new THREE.Vector3(0, 0, 0);
+            const direction = vector.clone().normalize();
+            const length = vector.length();
+            
+            const arrowHelper = new THREE.ArrowHelper(
+                direction,
+                origin,
+                length,
+                color,
+                0.5,  // Длина наконечника
+                0.2   // Ширина наконечника
+            );
+            
+            arrowHelper.name = name;
+            return arrowHelper;
+        }
+        
+        // Векторные операции
+        function addVectors() {
+            resultVector.copy(vectorA).add(vectorB);
+            updateResult('Сложение: A + B =', resultVector);
+        }
+        
+        function subtractVectors() {
+            resultVector.copy(vectorA).sub(vectorB);
+            updateResult('Вычитание: A - B =', resultVector);
+        }
+        
+        function crossProduct() {
+            resultVector.crossVectors(vectorA, vectorB);
+            updateResult('Векторное произведение: A × B =', resultVector);
+        }
+        
+        function dotProduct() {
+            const dot = vectorA.dot(vectorB);
+            document.getElementById('resultOutput').textContent = 
+                `Скалярное произведение: A · B = ${dot.toFixed(2)}`;
+        }
+        
+        function projection() {
+            const bNorm = vectorB.clone().normalize();
+            const scalar = vectorA.dot(bNorm);
+            resultVector.copy(bNorm).multiplyScalar(scalar);
+            updateResult('Проекция A на B:', resultVector);
+        }
+        
+        function angleBetween() {
+            const dot = vectorA.dot(vectorB);
+            const magA = vectorA.length();
+            const magB = vectorB.length();
+            const angle = Math.acos(dot / (magA * magB)) * (180 / Math.PI);
+            document.getElementById('resultOutput').textContent = 
+                `Угол между A и B: ${angle.toFixed(2)}°`;
+        }
+        
+        function magnitude() {
+            const mag = vectorA.length();
+            document.getElementById('resultOutput').textContent = 
+                `Длина вектора A: ${mag.toFixed(2)}`;
+        }
+        
+        function normalize() {
+            resultVector.copy(vectorA).normalize();
+            updateResult('Нормализованный вектор A:', resultVector);
+        }
+        
+        // Обновление результата
+        function updateResult(operation, vector) {
+            document.getElementById('resultOutput').textContent = 
+                `${operation}\nX: ${vector.x.toFixed(2)}\nY: ${vector.y.toFixed(2)}\nZ: ${vector.z.toFixed(2)}`;
+            drawVectors();
+        }
+        
+        // Обновление векторов из полей ввода
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+
+        function validateAndUpdate() {
+            const aX = parseFloat(document.getElementById('aX').value);
+            const aY = parseFloat(document.getElementById('aY').value);
+            const aZ = parseFloat(document.getElementById('aZ').value);
+            const bX = parseFloat(document.getElementById('bX').value);
+            const bY = parseFloat(document.getElementById('bY').value);
+            const bZ = parseFloat(document.getElementById('bZ').value);
+
+            if (
+                isNaN(aX) || isNaN(aY) || isNaN(aZ) ||
+                isNaN(bX) || isNaN(bY) || isNaN(bZ)
+            ) {
+                return; // Пока пользователь вводит — не мешаем
+            }
+
+            const ax = clamp(aX, -100, 100);
+            const ay = clamp(aY, -100, 100);
+            const az = clamp(aZ, -100, 100);
+            const bx = clamp(bX, -100, 100);
+            const by = clamp(bY, -100, 100);
+            const bz = clamp(bZ, -100, 100);
+
+            document.getElementById('aX').value = ax.toFixed(2);
+            document.getElementById('aY').value = ay.toFixed(2);
+            document.getElementById('aZ').value = az.toFixed(2);
+            document.getElementById('bX').value = bx.toFixed(2);
+            document.getElementById('bY').value = by.toFixed(2);
+            document.getElementById('bZ').value = bz.toFixed(2);
+
+            vectorA.set(ax, ay, az);
+            vectorB.set(bx, by, bz);
+
+            drawVectors();
+            document.getElementById('resultOutput').textContent = 'Векторы обновлены';
+         }
+
+
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Кнопки операций
+            document.getElementById('addBtn').addEventListener('click', addVectors);
+            document.getElementById('subtractBtn').addEventListener('click', subtractVectors);
+            document.getElementById('crossBtn').addEventListener('click', crossProduct);
+            document.getElementById('dotBtn').addEventListener('click', dotProduct);
+            document.getElementById('projectionBtn').addEventListener('click', projection);
+            document.getElementById('angleBtn').addEventListener('click', angleBetween);
+            document.getElementById('magnitudeBtn').addEventListener('click', magnitude);
+            document.getElementById('normalizeBtn').addEventListener('click', normalize);
+            
+            // Поля ввода
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
+                input.addEventListener('blur', validateAndUpdate); // когда пользователь выходит из поля
+                input.addEventListener('change', validateAndUpdate); // при подтверждении изменения
+            });
+
+            // Навигационные кнопки
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Убираем активный класс со всех кнопок
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('active');
+                    
+                    // Здесь можно добавить функционал для переключения разделов
+                    if (this.textContent === 'Главная') {
+                        document.getElementById('resultOutput').textContent = 'Переход на главную страницу';
+                    } else if (this.textContent === 'Теория') {
+                        document.getElementById('resultOutput').textContent = 'Раздел с теорией векторов';
+                    } else if (this.textContent === 'Примеры') {
+                        document.getElementById('resultOutput').textContent = 'Примеры векторных операций';
+                    }
+                });
+            });
+            // Сброс камеры
+            document.getElementById('resetCameraBtn').addEventListener('click', () => {
+                camera.position.set(30, 30, 30);
+                controls.target.set(0, 0, 0);
+                controls.update();
+            });
+
+            // Сброс сцены
+            document.getElementById('resetSceneBtn').addEventListener('click', () => {
+                // Сброс значений в полях ввода
+                document.getElementById('aX').value = 2;
+                document.getElementById('aY').value = 3;
+                document.getElementById('aZ').value = 1;
+
+                document.getElementById('bX').value = -1;
+                document.getElementById('bY').value = 2;
+                document.getElementById('bZ').value = 4;
+
+                // Обновляем векторы
+                vectorA.set(2, 3, 1);
+                vectorB.set(-1, 2, 4);
+                resultVector.set(0, 0, 0);
+
+                drawVectors();
+
+                // Возвращаем камеру тоже
+                camera.position.set(30, 30, 30);
+                controls.target.set(0, 0, 0);
+                controls.update();
+
+                document.getElementById('resultOutput').textContent = 'Сцена и векторы сброшены';
+            });
+
+        }
+        
+        // Обработка изменения размера окна
+        function onWindowResize() {
+            const canvas = document.getElementById('vectorCanvas');
+            camera.aspect = canvas.clientWidth / canvas.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        }
+        
+        // Анимация
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        // Запуск приложения
+        init();
+    </script>
+</body>
+</html>

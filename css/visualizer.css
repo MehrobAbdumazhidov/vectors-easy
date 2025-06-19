@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #ffffff;
+  color: #333;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0b38a9;
+  color: #ffffff;
+  padding: 1rem 2rem;
+}
+
+nav a {
+  color: #ffffff;
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+#main-area {
+  display: flex;
+  height: calc(100vh - 140px); /* учитываем header и footer */
+}
+
+.settings-panel {
+  width: 300px;
+  padding: 1rem;
+  border-right: 1px solid #ccc;
+  background: #f5f5f5;
+}
+
+.settings-panel h2 {
+  color: #0b38a9;
+}
+
+.settings-panel label {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.settings-panel input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.settings-panel button {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+  background: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.settings-panel button:hover {
+  background: #27ae60;
+}
+
+#three-container {
+  flex-grow: 1;
+  background: #e9f1ff;
+}
+
+footer {
+  background: #ffffff;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #555;
+}

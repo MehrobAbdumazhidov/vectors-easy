@@ -1,0 +1,196 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-color: #007BFF; /* ярко-синий цвет */
+  color: white;
+  border-bottom: 2px solid #0056b3;
+  position: relative;
+}
+
+
+.top-bar h1 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  flex-grow: 1;
+  color: white; /* белый текст на синем фоне */
+}
+
+.top-bar .home-btn {
+  position: absolute;
+  left: 20px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #0056b3; /* тёмно-синий */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.top-bar .home-btn:hover {
+  background-color: #003f88;
+}
+
+
+.home-btn {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #4a90e2;
+  transition: background-color 0.3s ease;
+}
+
+.home-btn:hover {
+  background-color: #dfefff;
+}
+
+.test-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.question-block {
+  animation: fadeIn 0.5s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+form {
+  margin-top: 1rem;
+}
+
+label {
+  display: block;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+
+.feedback {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  min-height: 1.2em;
+}
+
+.feedback.correct {
+  color: green;
+}
+
+.feedback.incorrect {
+  color: red;
+}
+
+.nav-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-buttons button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nav-buttons button:hover {
+  background-color: #357acc;
+}
+
+input[type="text"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.feedback.correct {
+  color: green;
+}
+
+.feedback.incorrect {
+  color: red;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+ul li {
+  margin-bottom: 12px;
+}
+
+li.correct {
+  color: green;
+}
+
+li.incorrect {
+  color: red;
+}
+
+/* Общий стиль кнопок */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 10px 5px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4CAF50; /* зелёный */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Специально для кнопок результатов */
+#results button {
+  display: inline-block;
+  margin-top: 20px;
+}
+

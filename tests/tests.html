@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Тест по векторам</title>
+  <link rel="stylesheet" href="../css/tests.css"/>
+</head>
+<body>
+  <header class="top-bar">
+    <button onclick="goHome()" class="home-btn">🏠 Главная</button>
+    <h1>Проверь свои знания!</h1>
+  </header>
+
+  <main class="test-container">
+    <!-- Вопрос 1 -->
+    <section class="question-block" id="question1">
+      <h2>Вопрос 1 из 10</h2>
+      <p>Какой из следующих векторов равен <strong>a = [3, 2]</strong>?</p>
+      <form>
+        <label><input type="radio" name="q1" value="1"> [2, 3]</label><br>
+        <label><input type="radio" name="q1" value="2"> [3, 2]</label><br>
+        <label><input type="radio" name="q1" value="3"> [-3, -2]</label><br>
+        <label><input type="radio" name="q1" value="4"> [2, -3]</label>
+      </form>
+      <p class="feedback" id="feedback1"></p>
+      <div class="nav-buttons">
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 2 -->
+    <section class="question-block hidden" id="question2">
+      <h2>Вопрос 2 из 10</h2>
+      <p>Чему равна длина вектора <strong>v = [6, 8]</strong>?</p>
+      <form>
+        <label><input type="radio" name="q2" value="1"> 10</label><br>
+        <label><input type="radio" name="q2" value="2"> √100</label><br>
+        <label><input type="radio" name="q2" value="3"> 14</label><br>
+        <label><input type="radio" name="q2" value="4"> 5</label>
+      </form>
+      <p class="feedback" id="feedback2"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 3 -->
+    <section class="question-block hidden" id="question3">
+      <h2>Вопрос 3 из 10</h2>
+      <p>Какие два вектора являются перпендикулярными?</p>
+      <form>
+        <label><input type="radio" name="q3" value="1"> [1, 2] и [2, 1]</label><br>
+        <label><input type="radio" name="q3" value="2"> [1, 2] и [-2, 1]</label><br>
+        <label><input type="radio" name="q3" value="3"> [3, 3] и [3, 3]</label><br>
+        <label><input type="radio" name="q3" value="4"> [1, 0] и [0, 1]</label>
+      </form>
+      <p class="feedback" id="feedback3"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 4 -->
+    <section class="question-block hidden" id="question4">
+      <h2>Вопрос 4 из 10</h2>
+      <p>Найдите сумму векторов <strong>a = [1, 2], b = [3, 4]</strong>.</p>
+      <form>
+        <label><input type="radio" name="q4" value="1"> [2, 6]</label><br>
+        <label><input type="radio" name="q4" value="2"> [4, 6]</label><br>
+        <label><input type="radio" name="q4" value="3"> [1, 2]</label><br>
+        <label><input type="radio" name="q4" value="4"> [2, 2]</label>
+      </form>
+      <p class="feedback" id="feedback4"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 5 -->
+    <section class="question-block hidden" id="question5">
+      <h2>Вопрос 5 из 10</h2>
+      <p>Какие из векторов коллинеарны?</p>
+      <form>
+        <label><input type="radio" name="q5" value="1"> [2, 3] и [3, 2]</label><br>
+        <label><input type="radio" name="q5" value="2"> [1, 2] и [2, 4]</label><br>
+        <label><input type="radio" name="q5" value="3"> [0, 1] и [1, 0]</label><br>
+        <label><input type="radio" name="q5" value="4"> [2, -1] и [-1, 2]</label>
+      </form>
+      <p class="feedback" id="feedback5"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 6 -->
+    <section class="question-block hidden" id="question6">
+      <h2>Вопрос 6 из 10</h2>
+      <p>Введите длину вектора <strong>a = [5, 12]</strong>:</p>
+      <input type="text" id="text-answer6" placeholder="Введите ответ">
+      <p class="feedback" id="feedback6"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 7 -->
+    <section class="question-block hidden" id="question7">
+      <h2>Вопрос 7 из 10</h2>
+      <p>Чему равно скалярное произведение <strong>a = [1, 2]</strong> и <strong>b = [3, 4]</strong>?</p>
+      <form>
+        <label><input type="radio" name="q7" value="1"> 11</label><br>
+        <label><input type="radio" name="q7" value="2"> 14</label><br>
+        <label><input type="radio" name="q7" value="3"> 7</label><br>
+        <label><input type="radio" name="q7" value="4"> 10</label>
+      </form>
+      <p class="feedback" id="feedback7"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 8 -->
+    <section class="question-block hidden" id="question8">
+      <h2>Вопрос 8 из 10</h2>
+      <p>Если <strong>a = [2, -1]</strong>, чему равен <strong>2a</strong>?</p>
+      <form>
+        <label><input type="radio" name="q8" value="1"> [4, -2]</label><br>
+        <label><input type="radio" name="q8" value="2"> [1, -0.5]</label><br>
+        <label><input type="radio" name="q8" value="3"> [-2, 1]</label><br>
+        <label><input type="radio" name="q8" value="4"> [2, 1]</label>
+      </form>
+      <p class="feedback" id="feedback8"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 9 -->
+    <section class="question-block hidden" id="question9">
+      <h2>Вопрос 9 из 10</h2>
+      <p>Какой угол между <strong>a = [1, 0]</strong> и <strong>b = [0, 1]</strong>?</p>
+      <form>
+        <label><input type="radio" name="q9" value="1"> 0°</label><br>
+        <label><input type="radio" name="q9" value="2"> 45°</label><br>
+        <label><input type="radio" name="q9" value="3"> 90°</label><br>
+        <label><input type="radio" name="q9" value="4"> 180°</label>
+      </form>
+      <p class="feedback" id="feedback9"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Следующий вопрос</button>
+      </div>
+    </section>
+
+    <!-- Вопрос 10 -->
+    <section class="question-block hidden" id="question10">
+      <h2>Вопрос 10 из 10</h2>
+      <p>Введите длину вектора <strong>a = [6, 8]</strong>:</p>
+      <input type="text" id="text-answer10" placeholder="Введите ответ">
+      <p class="feedback" id="feedback10"></p>
+      <div class="nav-buttons">
+        <button onclick="prevQuestion()" class="prev-btn" style="display:none">← Предыдущий вопрос</button>
+        <button onclick="nextQuestion()">Завершить</button>
+      </div>
+    </section>
+
+    <!-- Результаты теста -->
+    <section class="question-block hidden" id="results">
+      <h2>Результаты</h2>
+      <p id="final-score"></p>
+      <p id="best-score"></p>
+      <button onclick="restartTest()">Пройти заново</button>
+    </section>
+
+  </main>
+
+  <script src="../scripts/tests.js"></script>
+</body>
+</html>

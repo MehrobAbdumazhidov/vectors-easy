@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Практика — Векторы</title>
+  <link rel="stylesheet" href="../css/lessons.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Практика</h1>
+    <p>Выбери задание:</p>
+    <ul class="practice-list">
+      <li><a href="practice1.html">Практика 1: Координаты вектора</a></li>
+      <li><a href="practice2.html">Практика 2: Сложение векторов</a></li>
+      <li><a href="practice3.html">Практика 3: Проекция вектора</a></li>
+      <!-- Добавь другие задания тут -->
+    </ul>
+    <a href="../index.html">← Назад на главную</a>
+  </div>
+
+ <script>
+    function checkAnswer(inputId, correctValue, resultId) {
+      const input = document.getElementById(inputId);
+      const result = document.getElementById(resultId);
+
+      const userValue = input.value.trim()
+        .replace(/\s+/g, '')
+        .replace(/[()]/g, '');
+
+      const correct = correctValue.trim()
+        .replace(/\s+/g, '')
+        .replace(/[()]/g, '');
+
+      if (userValue === correct) {
+        result.textContent = "✅ Правильно!";
+        result.style.color = "green";
+      } else {
+        result.textContent = `❌ Неправильно. Правильный ответ: ${correctValue}`;
+        result.style.color = "red";
+      }
+    }
+  </script>
+
+
+</body>
+</html>
